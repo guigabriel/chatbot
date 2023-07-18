@@ -1,8 +1,8 @@
 export default class Conversation {
   id?: number;
+  userId: number;
   message: string;
   date: string;
-  userId: number;
 
   constructor() {
     this.id = 0;

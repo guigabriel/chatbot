@@ -27,6 +27,9 @@ export default class UserService {
   public saveConversation = async (
     entity: Pick<Conversation, 'userId' | 'message'>
   ): Promise<Pick<Conversation, 'id'>> => {
+    if(entity.userId === undefined){
+      throw new Error('You need to pass an user id');
+    }
     return this.repository.saveConversation(entity);
   };
 

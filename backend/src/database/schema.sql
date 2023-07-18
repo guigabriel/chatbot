@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS conversation(
     id INT NOT NULL AUTO_INCREMENT,
     message VARCHAR(255),
     user_id INT,
-    posted_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    posted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY(id),
     FOREIGN KEY (user_id) REFERENCES users(id)
 );
@@ -23,5 +23,5 @@ CREATE TABLE IF NOT EXISTS conversation(
 INSERT INTO users (username, password)
 VALUES ('GUI', 'a1b2c3d4');
 
-INSERT INTO conversation (message, user_id)
-VALUES ('FALA SHARK', 1);
+INSERT INTO conversation (user_id, message)
+VALUES (1, 'FALA SHARK');

@@ -24,7 +24,7 @@ export default class UserPersistenceMysqlAdapter implements IUserPersistence {
   public login = async (
     entity: Omit<User, 'id'>
   ): Promise<Pick<User, 'id'>> => {
-    const query = 'SELECT * FROM users WHERE email = ?';
+    const query = 'SELECT * FROM users WHERE username = ?';
     const values = entity.userName;
 
     const [data] = await db.execute(query, [values]);
@@ -58,8 +58,8 @@ export default class UserPersistenceMysqlAdapter implements IUserPersistence {
     entity: Pick<User, 'id'>
   ): Promise<Conversation[] | undefined> => {
     const query = 'SELECT * FROM conversation WHERE user_id = ?';
-    const values = entity.id;
-    const [data] = await db.execute(query, [values]);
+    const values = [entity.id];
+    const [data] = await db.execute(query, values);
     const conversations = data as Conversation[];
     return conversations.length > 0 ? conversations : undefined;
   };

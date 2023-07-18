@@ -1,6 +1,6 @@
 import 'dotenv/config';
 import app from './app';
-import connectionDataBase from './utils/connection';
+import connectionDataBase from '../utils/connection';
 
 const PORT = 3001;
 

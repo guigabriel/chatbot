@@ -37,12 +37,16 @@ export default class UserController {
     res: Response,
     next: NextFunction
   ) => {
-    const message: Pick<Conversation, 'userId' | 'message'> = {
+    const {userId, message} = req.body;
+    if (!userId || !message) {
+        return res.status(400).json({ error: 'userId and message are required fields.' });
+      }
+    const Imessage: Pick<Conversation, 'userId' | 'message'> = {
       userId: req.body.userId,
       message: req.body.message,
     };
     try {
-      const result = await this.useCase.saveConversation(message);
+      const result = await this.useCase.saveConversation(Imessage);
       return res.status(201).json(result);
     } catch (err) {
       next(err);
@@ -54,9 +58,11 @@ export default class UserController {
     res: Response,
     next: NextFunction
   ) => {
-    const { userId } = req.body;
+    const user: Pick<User, 'id'> ={
+        id: req.body.id
+    };
     try {
-      const result = await this.useCase.getConversation(userId);
+      const result = await this.useCase.getConversation(user);
       if (result === undefined)
         res.status(404).json({ message: 'Conversation is not found' });
       return res.status(201).json(result);
