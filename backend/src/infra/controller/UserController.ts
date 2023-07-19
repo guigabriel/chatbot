@@ -26,7 +26,7 @@ export default class UserController {
     };
     try {
       const result = await this.useCase.login(user);
-      return res.status(201).json(result);
+      return res.status(200).json(result);
     } catch (err) {
       next(err);
     }
@@ -47,7 +47,7 @@ export default class UserController {
     };
     try {
       const result = await this.useCase.saveConversation(Imessage);
-      return res.status(201).json(result);
+      return res.status(202).json(result);
     } catch (err) {
       next(err);
     }
@@ -65,7 +65,7 @@ export default class UserController {
       const result = await this.useCase.getConversation(user);
       if (result === undefined)
         res.status(404).json({ message: 'Conversation is not found' });
-      return res.status(201).json(result);
+      return res.status(200).json(result);
     } catch (err) {
       next(err);
     }

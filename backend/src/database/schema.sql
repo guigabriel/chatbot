@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS users(
 
 CREATE TABLE IF NOT EXISTS conversation(
     id INT NOT NULL AUTO_INCREMENT,
-    message VARCHAR(255),
+    message TEXT(32767),
     user_id INT,
     posted_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY(id),
