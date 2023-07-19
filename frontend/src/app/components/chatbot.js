@@ -22,7 +22,6 @@ export default function Chatbot() {
 
   const [auth, setAuth] = useState(false)
   const [id, setId] = useState(null)
-  const [error, setError] = useState(false)
 
   const handleSend = async (message) => {
     const newMsg = {
@@ -56,13 +55,38 @@ export default function Chatbot() {
     }
     axios.post(url, request)
       .then(response => {
-        setId(response.data.id)
-        setAuth(true)
+        if(response.status === 200) {
+          console.log(response.data.username)
+          setId(response.data.id)
+          const username = response.data.username;
+          setAuth(true)
+          const msgs = {
+            message: `Hello ${username}, how can i help you today ?`,
+            sender: 'Bot'
+          }
+          setMessage((prevMessages => [...prevMessages, msgs]))
+        }
       }).catch(error => {
         console.error('Erro na chamada POST:', error);
+        if (error) {
+          const opa = {
+            message: "Sorry, i cant understand, lets try again ",
+            sender: "Bot"
+          }
+          setMessage((prevMessages => [...prevMessages, opa]))
+          setMessage((prevMessages => [...prevMessages, msg]))
+        }
       });
     }
-    if(lastMessage.message === 'goodbye') {
+    if (words.includes('loan') && auth ) {
+      localStorage.setItem('id', id)
+      const botMsg = {
+        message: "Ok, i'm gonna show you some options",
+        seder: "Bot"
+      }
+      setMessage((prevMessages) => [...prevMessages, botMsg])
+    }
+    if(words.includes('goodbye') && auth) {
       const msg = {
           message: "Bye",
           sender: "Bot"
@@ -74,6 +98,7 @@ export default function Chatbot() {
         }
         axios.post(urlGoodbye, request)
           .then(response => {
+            setAuth(false)
             console.log(response)
           }).catch(error => {
             console.error('Erro na chamada POST:', error);
